@@ -6,16 +6,16 @@ info:
     email: hello@mingle.ro
   version: 1.0.0
 servers:
-  - url: https://mingle.ro/open-api/v1
+  - url: https://api.mingle.ro/open-api/v1
 
 paths:
   /candidates:
     get:
-      tags: [ "Candidate" ]
+      tags: ["Candidate"]
       summary: "GET job candidates"
       description: Returns a collection with all job candidates.
       security:
-        - ApiKeyAuth: [ ]
+        - ApiKeyAuth: []
       parameters:
         - name: "createdAfter"
           description: |
@@ -25,14 +25,12 @@ paths:
           required: false
           schema:
             type: "string"
-            example: "2025-05-01T00:00:00Z"
         - name: "cursor"
           description: An opaque token poiting to the next page to retrieve.
           in: "query"
           required: false
           schema:
             type: "string"
-            example: "MTcxNTU2NzcwNskyNDo4OTY5ODS"
         - name: "limit"
           description: An integer specifying the number of candidates to retrieve per page. The max number of items in a page cannot be more than 100.
           in: "query"
@@ -53,7 +51,7 @@ paths:
           schema:
             type: "string"
             default: "new"
-            enum: [ chronological, new ]
+            enum: [chronological, new]
             example: new
             description: >
       responses:
@@ -79,7 +77,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: 400
-                message: 'Missing/invalid sort param.'
+                message: "Missing/invalid sort param."
         "401":
           description: "Authorization information is missing or invalid."
           content:
@@ -88,7 +86,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: 401
-                message: 'Missing/invalid api key.'
+                message: "Missing/invalid api key."
 
         "403":
           description: "Insufficient access permissions."
@@ -98,7 +96,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: 403
-                message: 'Forbidden'
+                message: "Forbidden"
 components:
   schemas:
     Job:
@@ -195,7 +193,7 @@ components:
       type: object
       properties:
         pagination:
-          $ref: '#/components/schemas/Pagination'
+          $ref: "#/components/schemas/Pagination"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -203,4 +201,4 @@ components:
       name: X-API-KEY
 
 security:
-  - ApiKeyAuth: [ ]
+  - ApiKeyAuth: []
