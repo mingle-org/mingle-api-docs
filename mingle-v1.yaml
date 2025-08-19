@@ -142,7 +142,7 @@ paths:
           description: |
             How to order the results:\
               'new' - Newly created jobs are displayed first.\
-              'recent' - The most recently updated jobs are displayed first.
+              'recent' - The most recently updated jobs are displayed first.\
               'lexical' - Jobs are displayed in alphabetical order by title.
           in: "query"
           required: false
