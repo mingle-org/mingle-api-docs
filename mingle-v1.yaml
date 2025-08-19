@@ -298,7 +298,7 @@ components:
           $ref: "#/components/schemas/Company"
         department:
           $ref: "#/components/schemas/Department"
-        lcoations:
+        locations:
           type: "array"
           items:
             $ref: "#/components/schemas/Location"
