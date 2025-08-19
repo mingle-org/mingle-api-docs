@@ -97,6 +97,85 @@ paths:
               example:
                 code: 403
                 message: "Forbidden"
+  /boards/career:
+    get:
+      tags: ["Job feed"]
+      summary: "Get jobs posted on the public careers page."
+      description: Returns a paginated list of jobs that are posted on company’s careers page.
+      security: 
+        []
+      parameters:
+        - name: "company"
+          description: The unique identifier of the company
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            example: "watercooler"
+        - name: "term"
+          description: A free text search term for filtering jobs by title.
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            example: "manager"
+        - name: "offset"
+          description: An integer specifying the index of the starting element(zero based).
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+            default: "0"
+            example: 0
+        - name: "limit"
+          description: An integer specifying the number of jobs to retrieve per page. The max number of items in a page cannot be more than 100.
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+            default: "50"
+            maximum: 100
+            example: 50
+        - name: "sort"
+          description: |
+            How to order the results:\
+              'new' - Newly created jobs are displayed first.\
+              'recent' - The most recently updated jobs are displayed first.
+              'lexical' - Jobs are displayed in alphabetical order by title.
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            default: "new"
+            enum: [new, recent,lexical]
+            example: new
+            description: >
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      content:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/JobFeed"
+                  - $ref: "#/components/schemas/Slice"
+
+        "400":
+          description: "Bad request. Any of the specified request params is not valid."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: 400
+                message: "Missing/invalid sort param."
 components:
   schemas:
     Job:
@@ -187,13 +266,75 @@ components:
           example: true
         cursor:
           type: "string"
-          description: A fixed point in the ordered set of results that should be passed as a parameter to the same endpoint to retrieve the next page of results along with a new 'cursor' value
+          description: | 
+            An optional fixed point in the ordered set of results that should be passed as a parameter to the same endpoint to retrieve the next page of results along with a new 'cursor' value.\
+            The value is populated only for endpoints that supports key-set pagination.
           example: MTcxNTU2NzcwNskyNDo4OTY5ODS
     Slice:
       type: object
       properties:
         pagination:
           $ref: "#/components/schemas/Pagination"
+    JobFeed:
+      type: "object"
+      properties:
+        uid:
+          type: "string"
+          description: The unique identifier of the job.
+          example: "Bx1e-Q"
+        title:
+          type: "string"
+          description: Job's title.
+          example: "Office Manager"
+        description:
+          type: "string"
+          description: The description of the job in HTML format.
+          example: "<p>We are looking for a competitive Office Manager</p>"  
+        url:
+          type: "string"
+          description: The web link to the apply page.
+          example: "https://watercooler.mingle.ro/ro/apply/Bx1e-Q"
+        company:
+          $ref: "#/components/schemas/Company"
+        department:
+          $ref: "#/components/schemas/Department"
+        lcoations:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Location"
+    Company:
+      type: "object"
+      properties:
+        uid:
+          type: "string"
+          description: The unique identifier of the company
+          example: "watercooler"
+        label:
+          type: "string"
+          description: The name of the company
+          example: "Watercooler"
+    Department:
+      type: "object"
+      properties:
+        uid:
+          type: "string"
+          description: The unique identifier of the department
+          example: "247"
+        label:
+          type: "string"
+          description: The name of the department
+          example: "Administrative"
+    Location:
+      type: "object"
+      properties:
+        uid:
+          type: "string"
+          description: The unique identifier of the location
+          example: "1"
+        label:
+          type: "string"
+          description: The name of the location
+          example: "Bucharest"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
