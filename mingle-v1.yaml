@@ -302,6 +302,14 @@ components:
           type: "array"
           items:
             $ref: "#/components/schemas/Location"
+        employmentTypes:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/EmploymentType"
+        seniorityLevels:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/SeniorityLevel"
     Company:
       type: "object"
       properties:
@@ -335,6 +343,28 @@ components:
           type: "string"
           description: The name of the location
           example: "Bucharest"
+    EmploymentType:
+      type: "object"
+      properties:
+        uid:
+          type: "string"
+          description: The unique identifier of the entry
+          example: "1"
+        label:
+          type: "string"
+          description: The display name
+          example: "Full-time"
+    SeniorityLevel:
+      type: "object"
+      properties:
+        uid:
+          type: "string"
+          description: The unique identifier of the entry
+          example: "1"
+        label:
+          type: "string"
+          description: The display name
+          example: "Junior"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
