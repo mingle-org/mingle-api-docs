@@ -302,6 +302,48 @@ components:
           type: "array"
           items:
             $ref: "#/components/schemas/Location"
+        employmentTypes:
+          description: "The offered contract types (full-time, part-time, etc.)."
+          type: array
+          items:
+            type: object
+            properties:
+              uid:
+                type: string
+                description: The unique identifier of the entry
+              label:
+                type: string
+                description: The display name
+          example:
+            - uid: "1"
+              label: "Full-time"
+            - uid: "2"
+              label: "Part-time"
+            - uid: "3"
+              label: "Collaboration contract"
+        seniorityLevels:
+          description: "The requested experience level of the candidate."
+          type: array
+          items:
+            type: object
+            properties:
+              uid:
+                type: string
+                description: The unique identifier of the entry
+              label:
+                type: string
+                description: The display name
+          example:
+            - uid: "1"
+              label: "No experience"
+            - uid: "2"
+              label: "Junior"
+            - uid: "3"
+              label: "Middle"
+            - uid: "4"
+              label: "Senior"
+            - uid: "5"
+              label: "Executive"
     Company:
       type: "object"
       properties:
