@@ -303,13 +303,47 @@ components:
           items:
             $ref: "#/components/schemas/Location"
         employmentTypes:
-          type: "array"
+          description: "The offered contract types (full-time, part-time, etc.)."
+          type: array
           items:
-            $ref: "#/components/schemas/EmploymentType"
+            type: object
+            properties:
+              uid:
+                type: string
+                description: The unique identifier of the entry
+              label:
+                type: string
+                description: The display name
+          example:
+            - uid: "1"
+              label: "Full-time"
+            - uid: "2"
+              label: "Part-time"
+            - uid: "3"
+              label: "Collaboration contract"
         seniorityLevels:
-          type: "array"
+          description: "The requested experience level of the candidate."
+          type: array
           items:
-            $ref: "#/components/schemas/SeniorityLevel"
+            type: object
+            properties:
+              uid:
+                type: string
+                description: The unique identifier of the entry
+              label:
+                type: string
+                description: The display name
+          example:
+            - uid: "1"
+              label: "No experience"
+            - uid: "2"
+              label: "Junior"
+            - uid: "3"
+              label: "Middle"
+            - uid: "4"
+              label: "Senior"
+            - uid: "5"
+              label: "Executive"
     Company:
       type: "object"
       properties:
@@ -343,28 +377,6 @@ components:
           type: "string"
           description: The name of the location
           example: "Bucharest"
-    EmploymentType:
-      type: "object"
-      properties:
-        uid:
-          type: "string"
-          description: The unique identifier of the entry
-          example: "1"
-        label:
-          type: "string"
-          description: The display name
-          example: "Full-time"
-    SeniorityLevel:
-      type: "object"
-      properties:
-        uid:
-          type: "string"
-          description: The unique identifier of the entry
-          example: "1"
-        label:
-          type: "string"
-          description: The display name
-          example: "Junior"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
